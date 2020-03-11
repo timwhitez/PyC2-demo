@@ -18,7 +18,7 @@
 
 仅供学习
 
-![](https://raw.githubusercontent.com/timwhitez/PyC2-demo/master/demo.PNG)
+![](https://raw.githubusercontent.com/timwhitez/PyC2-demo/master/demo1.PNG)
 
 ![](https://raw.githubusercontent.com/timwhitez/PyC2-demo/master/frame.PNG)
 
