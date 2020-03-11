@@ -28,6 +28,7 @@ def send(c2cmd):
 		return None
 
 def heartbeats():
+	print "正在连接......"
 	i=0
 	j=0
 	url0="http://ip:5000/c2heartbeat?control=test"
@@ -45,12 +46,16 @@ def heartbeats():
 			j=0
 		time.sleep(1)
 	print '已连接'
+	global conn
+	conn=1
 	t1 = threading.Thread(target=main)
 	t1.start()
 	while True:
 		i+=1
-		if i>5:
-			print '失去连接'
+		if i>4:
+			print '失去连接1'
+			conn=0
+			return
 		# 每10秒接收一次心跳包
 		try:
 			s0= requests.get(url0, timeout=5)
@@ -87,15 +92,16 @@ def receive():
 
 def main():
 	c2_command = ''
-	while True:
+	while conn==1:
 		c2_command = raw_input("Command:")
 		send(c2_command)
 		receive()
-
+	return
 
 
 
 if __name__ == '__main__':
 	#启动心跳线程
-	t = threading.Thread(target=heartbeats)
-	t.start()
+	while True:
+		heartbeats()
+		conn=0
