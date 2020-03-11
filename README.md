@@ -13,3 +13,10 @@
 ![](https://raw.githubusercontent.com/timwhitez/PyC2-demo/master/demo.PNG)
 
 ![](https://raw.githubusercontent.com/timwhitez/PyC2-demo/master/frame.PNG)
+
+# ToDo
+
+- [ ] 加入心跳包及上线提醒
+- [ ] 用c++/Golang 重构client
+- [ ] 加入多对多支持
+- [ ] 流量加密/编码
