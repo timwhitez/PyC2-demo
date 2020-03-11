@@ -20,3 +20,6 @@
 - [ ] 用c++/Golang 重构client
 - [ ] 加入多对多支持
 - [ ] 流量加密/编码
+- [ ] 加入argument spoofing
+- [ ] 加入R3 Kill AntiVirus
+- [ ] 整合上传等功能组件
