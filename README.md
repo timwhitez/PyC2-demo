@@ -10,4 +10,6 @@
 
 仅供学习
 
-![](https://github.com/timwhitez/PyC2-demo/blob/master/demo.PNG?raw=true)
+![](https://raw.githubusercontent.com/timwhitez/PyC2-demo/master/demo.PNG)
+
+![](https://raw.githubusercontent.com/timwhitez/PyC2-demo/master/frame.PNG)
